@@ -1,4 +1,6 @@
 set -q NOTES_HOME; or set NOTES_HOME $HOME/.notes
+set -q NOTES_EDITOR; or set NOTES_EDITOR $EDITOR
+set -q NOTES_SUFFIX; or set NOTES_SUFFIX txt
 
 function notes -a note
   if not test -d $NOTES_HOME
@@ -17,10 +19,10 @@ mkdir -p $NOTES_HOME"
   end
 
   if test -z $note
-    eval "$EDITOR $NOTES_HOME"
+    eval "tree $NOTES_HOME"
   else
-    eval "$EDITOR $NOTES_HOME/$note"
+    eval "$NOTES_EDITOR $NOTES_HOME/$note.$NOTES_SUFFIX"
   end
 end
 
-complete -x -c notes -a "(ls $NOTES_HOME)"
+complete -x -c notes -a "(cd $NOTES_HOME; find . -type f -name '*.$NOTES_SUFFIX' | sed -n 's!\./!!p' | sed -n 's!\.org!!p')"
