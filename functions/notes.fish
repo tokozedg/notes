@@ -19,10 +19,10 @@ mkdir -p $NOTES_HOME"
   end
 
   if test -z $note
-    eval "tree $NOTES_HOME"
+    eval "tree -P '*.$NOTES_SUFFIX' $NOTES_HOME"
   else
     eval "$NOTES_EDITOR $NOTES_HOME/$note.$NOTES_SUFFIX"
   end
 end
 
-complete -x -c notes -a "(cd $NOTES_HOME; find . -type f -name '*.$NOTES_SUFFIX' | sed -n 's!\./!!p' | sed -n 's!\.org!!p')"
+complete -x -c notes -a "(cd $NOTES_HOME; find . -type f -name '*.$NOTES_SUFFIX' | sed -n 's!\./!!p' | sed -n 's!\.$NOTES_SUFFIX!!p')"
