@@ -2,7 +2,7 @@ set -q NOTES_HOME; or set NOTES_HOME $HOME/.notes
 set -q NOTES_EDITOR; or set NOTES_EDITOR $EDITOR
 set -q NOTES_SUFFIX; or set NOTES_SUFFIX txt
 
-function notes -a note
+function notes -a file
   if not test -d $NOTES_HOME
     if not test -f $NOTES_HOME
       mkdir $NOTES_HOME
@@ -18,10 +18,10 @@ mkdir -p $NOTES_HOME"
     end
   end
 
-  if test -z $note
+  if test -z $file
     eval "tree -P '*.$NOTES_SUFFIX' $NOTES_HOME"
   else
-    eval "$NOTES_EDITOR $NOTES_HOME/$note.$NOTES_SUFFIX"
+    eval "$NOTES_EDITOR $NOTES_HOME/$file.$NOTES_SUFFIX"
   end
 end
 
