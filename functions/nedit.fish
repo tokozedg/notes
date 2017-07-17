@@ -2,7 +2,7 @@ set -q NOTES_HOME; or set NOTES_HOME $HOME/.notes
 set -q NOTES_EDITOR; or set NOTES_EDITOR $EDITOR
 set -q NOTES_SUFFIX; or set NOTES_SUFFIX txt
 
-function notes -a file
+function nedit -a file
   if not test -d $NOTES_HOME
     if not test -f $NOTES_HOME
       mkdir $NOTES_HOME
@@ -19,10 +19,11 @@ mkdir -p $NOTES_HOME"
   end
 
   if test -z $file
-    eval "tree -P '*.$NOTES_SUFFIX' $NOTES_HOME"
+    echo "Specify note file."    
+    return
   else
     eval "$NOTES_EDITOR $NOTES_HOME/$file.$NOTES_SUFFIX"
   end
 end
 
-complete -x -c notes -a "(cd $NOTES_HOME; find . -type f -name '*.$NOTES_SUFFIX' | sed -n 's!\./!!p' | sed -n 's!\.$NOTES_SUFFIX!!p')"
+complete -x -c nedit -a "(cd $NOTES_HOME; find . -type f -name '*.$NOTES_SUFFIX' | sed -n 's!\./!!p' | sed -n 's!\.$NOTES_SUFFIX!!p')"
